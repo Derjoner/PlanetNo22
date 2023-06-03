@@ -1,0 +1,31 @@
+import pygame
+
+from pygame.sprite import Sprite
+
+class Bullet(Sprite):
+
+    """Класс пуль"""
+
+    def __init__(self, ai_game):
+
+        """Инициализация пуль"""
+        super().__init__()
+        self.screen = ai_game.screen
+        self.settings = ai_game.settings
+        self.color = self.settings.bullet_color
+
+        self.bullet_img = pygame.image.load("images/ship/bullet.png")
+        self.rect = self.bullet_img.get_rect()
+        # self.rect = pygame.Rect(0, 0, self.settings.bullet_width, self.settings.bullet_height)
+        self.rect.midtop = ai_game.ship.rect.midtop
+
+        self.y = float(self.rect.y)
+
+    def update(self):
+        """Движение пуль"""
+        self.y -= self.settings.bullet_speed
+        self.rect.y = self.y
+
+    def draw_bullet(self):
+        """Отображение пуль"""
+        self.screen.blit(self.bullet_img, self.rect)
